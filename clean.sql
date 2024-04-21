@@ -1,4 +1,5 @@
-SELECT
+INSERT INTO scrub_dump
+(SELECT
 	(raw_json->'routes'->0->'legs'->0->'summary'->'departureTime')::TEXT::TIMESTAMPTZ AS departure_time,
   CASE
   	WHEN (raw_json->'routes'->0->'legs'->0->'summary'->'lengthInMeters')::INT > 81000
@@ -10,6 +11,6 @@ SELECT
   (raw_json->'routes'->0->'legs'->0->'summary'->'noTrafficTravelTimeInSeconds')::INT AS perfect_time,
   (raw_json->'routes'->0->'legs'->0->'summary'->'travelTimeInSeconds')::INT AS travel_time,
   (raw_json->'routes'->0->'legs'->0->'summary'->'trafficDelayInSeconds')::INT AS traffic_delay
-FROM road_scraper;
+FROM road_scraper);
 
 DELETE FROM road_scraper;
